@@ -9,12 +9,19 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
+const toOrigin = (value) => {
+  try {
+    return new URL(value).origin;
+  } catch (error) {
+    return value.replace(/\/$/, "");
+  }
+};
 const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
   ...(process.env.CLIENT_URL || "")
     .split(",")
-    .map((origin) => origin.trim().replace(/\/$/, ""))
+    .map((origin) => toOrigin(origin.trim()))
     .filter(Boolean)
 ];
 
@@ -23,7 +30,7 @@ connectDB();
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ""))) {
+      if (!origin || allowedOrigins.includes(toOrigin(origin))) {
         callback(null, true);
         return;
       }
