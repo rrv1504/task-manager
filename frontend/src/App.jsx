@@ -115,7 +115,9 @@ function App() {
   const [query, setQuery] = useState("");
   const [runningTimer, setRunningTimer] = useState(null);
   const [tick, setTick] = useState(0);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(
+    () => typeof window === "undefined" || window.innerWidth > 1080,
+  );
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [categories, setCategories] = useState(defaultCategories);
   const [newCategory, setNewCategory] = useState("");
@@ -927,10 +929,7 @@ function App() {
                         <div className="task-meta-item">
                           <span>Due date</span>
                           <strong className={`due-pill ${getDueStatus(task).toLowerCase().replaceAll(" ", "-")}`}>
-                            <span className="due-pill-text">
-                              <CalendarDays size={15} /> {formatDate(task.dueDate)} - {getDueStatus(task)}
-                            </span>
-                            <CalendarDays size={15} /> {formatDate(task.dueDate)} · {getDueStatus(task)}
+                            <CalendarDays size={15} /> {formatDate(task.dueDate)} - {getDueStatus(task)}
                           </strong>
                         </div>
                         <div className="task-meta-item">
@@ -1064,7 +1063,7 @@ function App() {
             <div className="focus-actions">
               <button
                 className="icon-text"
-                typee ="button"
+                type="button"
                 onClick={() => setFocusTaskId(null)}
               >
                 Close
