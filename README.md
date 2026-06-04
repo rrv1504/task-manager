@@ -116,17 +116,3 @@ PUT    /api/tasks/:id
 DELETE /api/tasks/:id
 ```
 
-## Push To GitHub
-
-From the project root:
-
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-git push -u origin main
-```
-
-Make sure `.env`, `node_modules`, and `dist` are not pushed. They are already listed in `.gitignore`.
